@@ -21,8 +21,12 @@ state = {
     email: '',
     password: '',
     passwordVerify: '',
-    name: ''
+    name: '',
+    accessToken: ''
 }
+
+base_url = this.props.navigation.state.params.url
+url = this.base_url + "/api/signup"
 
 handleButton(){
 /**
@@ -81,8 +85,15 @@ then send to dash
                 )
     }else{
         // Post request, get access code
+        fetch(`${this.url}?p=%7B%22email%22%3A%22${this.state.email}%22%2C%22password%22%3A%22${this.state.password}%22%2C%22passwordVerify%22%3A%22${this.state.passwordVerify}%22%2C%22name%22%3A%22${this.state.name}%22%7D`,
+        {
+          method: 'GET'
+        }).then((response) => console.log(response._bodyText)).then((responseJS) => {this.setState({accessToken: JSON.stringify(responseJS._bodyText)});})
+
+        console.log(this.state.accessToken)
+
         Keyboard.dismiss()
-        this.props.navigation.navigate('Dash')
+        this.props.navigation.navigate('Dash', {url: this.base_url, accessToken: this.state.accessToken})
 
     }
 }
@@ -90,6 +101,18 @@ then send to dash
  render() {
     return (
       <View style={styles.container}>
+
+            <TextInput
+                placeholder="What is your name :)"
+                style={styles.newTermInput}
+                value={this.state.name}
+                onChangeText={(text) => {
+                  this.setState({
+                    name: text
+                  });
+                }}
+              />
+
             <TextInput
             placeholder="Email"
             keyboardType='email-address'
@@ -126,16 +149,7 @@ then send to dash
               }}
             />
 
-          <TextInput
-            placeholder="And what is your name :)"
-            style={styles.newTermInput}
-            value={this.state.name}
-            onChangeText={(text) => {
-              this.setState({
-                name: text
-              });
-            }}
-          />
+
 
           <Button
             title="Sign Up"

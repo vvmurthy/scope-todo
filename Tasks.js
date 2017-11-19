@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
+  Button,
   Text
 } from 'react-native';
 
@@ -14,20 +15,24 @@ export default class TasksScreen extends Component {
 
   // This needs to be inherited from Dash and passed at navigation
   state = {
-    boardID: 0,
-    title: 'Read a book',
-    category: 'Reading',
-    description: 'For GE',
-    completionTime: 100,
-    dueDate: 100,
+    boardID: this.props.navigation.state.params.task.boardID,
+    title: this.props.navigation.state.params.task.title,
+    category: this.props.navigation.state.params.task.category,
+    description: this.props.navigation.state.params.task.description,
+    completionTime: this.props.navigation.state.params.task.completionTime,
+    dueDate: this.props.navigation.state.params.task.dueDate,
   }
+
+  base_url = this.props.navigation.state.params.url
+  url = this.base_url + ''
+  accessToken = this.props.navigation.state.params.accessToken
 
   handleButton(){
     /**
     This would need to handle resolving a task post request to update
     server then re-render the updated dash
     **/
-    this.props.navigation.navigate('Dash')
+    this.props.navigation.navigate('Dash', {url: this.base_url, accessToken: this.accessToken})
   }
 
   render() {

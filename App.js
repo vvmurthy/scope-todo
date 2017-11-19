@@ -1,4 +1,6 @@
+import { Platform, StatusBar } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+
 import TasksScreen from './Tasks';
 import DashScreen from './Dash';
 import SignInScreen from './SignInScreen';
@@ -11,6 +13,11 @@ const App = StackNavigator({
   Dash: { screen: DashScreen },
   Tasks: { screen: TasksScreen },
   AddTask: {screen: AddTaskScreen},
+},
+{
+    cardStyle: {
+      paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight
+    }
 });
 
 export default App;

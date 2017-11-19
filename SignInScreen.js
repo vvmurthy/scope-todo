@@ -22,6 +22,9 @@ state = {
     accessToken: '',
 }
 
+base_url = "http://a562a834.ngrok.io"
+url = this.base_url + '/api/signin'
+
 handleButton(){
 /**
 Check for entered password / email
@@ -61,7 +64,15 @@ then send to dash
     }else{
         // Post request, get access code
         Keyboard.dismiss()
-        this.props.navigation.navigate('Dash')
+
+        fetch(`${this.url}?p=%7B%22email%22%3A%22${this.state.email}%22%2C%22password%22%3A%22${this.state.password}%22%7D`,
+                {
+                  method: 'GET'
+                }).then((response) => {this.setState({accessToken: response._bodyText});})
+
+        console.log("print something by now")
+
+        this.props.navigation.navigate('Dash', {url: this.base_url, accessToken: this.state.accessToken})
 
     }
 }
@@ -101,7 +112,7 @@ then send to dash
 
           <Button
               title="New Here? Sign up for an account."
-              onPress={() => this.props.navigation.navigate('SignUp')}
+              onPress={() => this.props.navigation.navigate('SignUp', {url: this.base_url})}
               color='#000000'
               style={styles.closeButton} />
         </View>
