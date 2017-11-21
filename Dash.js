@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
+  FlatList,
   Text,
   Button
 } from 'react-native';
+
+import TasksScreen from './Tasks';
 
 export default class DashScreen extends Component {
 
@@ -15,6 +18,9 @@ export default class DashScreen extends Component {
 
   state = {
       load: false,
+      name: 'board1',
+      admin: 'kevin.surya@gmail.com',
+      members: 'Tom@gmail.com',
       tasks: [{
                   boardID: 0,
                   title: "Read a book",
@@ -49,10 +55,23 @@ export default class DashScreen extends Component {
           this.props.navigation.navigate('AddTask', {url: this.base_url, accessToken: this.accessToken});
   }
 
-   componentDidMount() {
-      // We can only set the function after the component has been initialized
-      this.props.navigation.setParams({ addTaskButton: this._addTaskButton });
-   }
+  _createBoard(){
+
+  fetch(`${this.url}accessToken={this.state.accessToken}&p=%7B%22Name%22%3A%22Temp+Board%22%2C%22Admin%22%3A%22{this.state.admin}%22%7D`,
+                  {
+                    method: 'GET'
+                  }).then((response) => console.log(response))
+
+
+  }
+
+  keyExtractor = (item, index) => item.boardID;
+
+  renderTask = ({item}) => {
+      return <TasksScreen task={item} url={this.base_url} accessToken={this.accessToken} navigation={this.props.navigation} />
+    }
+
+
 
   render() {
 
@@ -72,16 +91,6 @@ export default class DashScreen extends Component {
     var rows = []
     var i = 0
 
-    for(i = 0; i < this.state.tasks.length; i++){
-
-                 rows.push(<Button
-                    title={this.state.tasks[i].title}
-                    color='#000000'
-                    onPress={() => this.handleButton(0)}
-                  />)
-
-             }
-
     return (
       <View style={styles.container}>
 
@@ -92,7 +101,17 @@ export default class DashScreen extends Component {
                 }
          />
 
-         {rows}
+         <Button
+                         title="Create board"
+                         color='#000000'
+                         onPress={() => this._createBoard()}
+          />
+
+         <FlatList
+                   data={this.state.tasks}
+                   keyExtractor={this.keyExtractor}
+                   renderItem={this.renderTask}
+         />
 
 
       </View>

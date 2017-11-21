@@ -9,50 +9,33 @@ import {
 
 export default class TasksScreen extends Component {
 
-  static navigationOptions = {
-    title: 'Task',
-  };
+ state = {
+     boardID: this.props.task.boardID,
+     title: this.props.task.title,
+     category: this.props.task.category,
+     description: this.props.task.description,
+     completionTime: this.props.task.completionTime,
+     dueDate: this.props.task.dueDate,
+   }
 
-  // This needs to be inherited from Dash and passed at navigation
-  state = {
-    boardID: this.props.navigation.state.params.task.boardID,
-    title: this.props.navigation.state.params.task.title,
-    category: this.props.navigation.state.params.task.category,
-    description: this.props.navigation.state.params.task.description,
-    completionTime: this.props.navigation.state.params.task.completionTime,
-    dueDate: this.props.navigation.state.params.task.dueDate,
-  }
-
-  base_url = this.props.navigation.state.params.url
+  base_url = this.props.url
   url = this.base_url + ''
-  accessToken = this.props.navigation.state.params.accessToken
+  accessToken = this.props.accessToken
 
   handleButton(){
-    /**
-    This would need to handle resolving a task post request to update
-    server then re-render the updated dash
-    **/
-    this.props.navigation.navigate('Dash', {url: this.base_url, accessToken: this.accessToken})
+    this.props.navigation.navigate('FullTask', {task: this.state, url: this.base_url, accessToken: this.accessToken})
   }
 
   render() {
 
     return (
       <View style={styles.container}>
-          <Text style={styles.title}>{this.state.title}</Text>
-
-          <Text style={styles.description}>{this.state.completionTime}</Text>
-          <Text style={styles.description}>{this.state.dueDate}</Text>
-          <Text style={styles.description}>{this.state.category}</Text>
-          <Text style={styles.description}>{this.state.description}</Text>
 
           <Button
-              title="Done with this task? Resolve it"
-              onPress={() => this.handleButton()}
-              color='#000000'
-              style={styles.closeButton} />
-
-
+                        title={this.state.title}
+                        onPress={() => this.handleButton()}
+                        color='#000000'
+                        style={styles.closeButton} />
       </View>
     );
   }

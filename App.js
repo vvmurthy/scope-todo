@@ -6,6 +6,7 @@ import DashScreen from './Dash';
 import SignInScreen from './SignInScreen';
 import SignUpScreen from './SignUpScreen';
 import AddTaskScreen from './AddTaskScreen';
+import FullTaskScreen from './FullTaskScreen';
 
 const App = StackNavigator({
   SignIn: {screen: SignInScreen},
@@ -13,6 +14,7 @@ const App = StackNavigator({
   Dash: { screen: DashScreen },
   Tasks: { screen: TasksScreen },
   AddTask: {screen: AddTaskScreen},
+  FullTask: {screen: FullTaskScreen},
 },
 {
     cardStyle: {
