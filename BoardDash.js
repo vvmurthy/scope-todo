@@ -77,7 +77,7 @@ export default class BoardDashScreen extends Component {
     place in this.state.boards
   **/
   _createBoard(){
-      fetch(`${this.url}accessToken={this.state.accessToken}&p=%7B%22Name%22%3A%22Temp+Board%22%2C%22Admin%22%3A%22{this.state.admin}%22%7D`,
+      fetch(`${this.url}accessToken=${this.state.accessToken}&p=%7B%22Name%22%3A%22Temp+Board%22%2C%22Admin%22%3A%22${this.state.admin}%22%7D`,
                       {
                         method: 'GET'
                       }).then((response) => response)
