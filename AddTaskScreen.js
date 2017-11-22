@@ -25,10 +25,18 @@ state = {
     description: '',
 }
 
+base_url = this.props.navigation.state.params.url
+url = this.base_url + '/api/getBoardReport'
+accessToken = this.props.navigation.state.params.accessToken
+
 /**
 TODO: Add addTask API call here
 **/
 _addtask(){
+  fetch(`${this.url}?accessToken=${this.accessToken}&p=%7B%22BoardId%22%3A%22${this.state.boardID}%22%2C%22Name%22%3A%22${this.state.name}%22%2C%22Category%22%3A%22${this.state.category}%22%2C%22DueDate%22%3A${this.state.dueDate}%2C%22CompletionTime%22%3A${this.state.completionTime}%2C%22Description%22%3A%22${this.state.description}%22%7D`,
+  {
+    method: 'POST'
+  }).then((response) => {console.log(response);})
 
 
 }
