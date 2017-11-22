@@ -26,11 +26,10 @@ export default class FullTaskScreen extends Component {
   url = this.base_url + ''
   accessToken = this.props.navigation.state.params.accessToken
 
+  /**
+  TODO: API Call to remove task
+  **/
   handleButton(){
-    /**
-    This would need to handle resolving a task post request to update
-    server then re-render the updated dash
-    **/
     this.props.navigation.navigate('Dash', {url: this.base_url, accessToken: this.accessToken})
   }
 

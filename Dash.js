@@ -12,31 +12,12 @@ import TasksScreen from './Tasks';
 export default class DashScreen extends Component {
 
   static navigationOptions = {
-    title: 'Dashboard',
-    headerLeft: null,
+    title: 'Task Dashboard',
   };
 
   state = {
       load: false,
-      name: 'board1',
-      admin: 'kevin.surya@gmail.com',
-      members: 'Tom@gmail.com',
-      tasks: [{
-                  boardID: 0,
-                  title: "Read a book",
-                  category: 'Reading',
-                  description: 'For GE',
-                  completionTime: 100,
-                  dueDate: 100,
-                },
-                {
-                    boardID: 1,
-                    title: "Solve Integrals",
-                    category: 'Math',
-                    description: 'For 126',
-                    completionTime: 10,
-                    dueDate: 10,
-                  }]
+      tasks: this.props.navigation.state.params.tasks
   }
 
   base_url = this.props.navigation.state.params.url
@@ -55,17 +36,11 @@ export default class DashScreen extends Component {
           this.props.navigation.navigate('AddTask', {url: this.base_url, accessToken: this.accessToken});
   }
 
-  _createBoard(){
-
-  fetch(`${this.url}accessToken={this.state.accessToken}&p=%7B%22Name%22%3A%22Temp+Board%22%2C%22Admin%22%3A%22{this.state.admin}%22%7D`,
-                  {
-                    method: 'GET'
-                  }).then((response) => console.log(response))
-
-
+  _optionsButton(){
+        this.props.navigation.navigate('BoardOptions', {url: this.base_url, accessToken: this.accessToken, boardID: this.state.tasks[0].boardID});
   }
 
-  keyExtractor = (item, index) => item.boardID;
+  keyExtractor = (item, index) => item.title;
 
   renderTask = ({item}) => {
       return <TasksScreen task={item} url={this.base_url} accessToken={this.accessToken} navigation={this.props.navigation} />
@@ -102,9 +77,10 @@ export default class DashScreen extends Component {
          />
 
          <Button
-                         title="Create board"
-                         color='#000000'
-                         onPress={() => this._createBoard()}
+                 title="Edit Board Sharing Options"
+                 color='#000000'
+                 onPress={() => this._optionsButton()
+                 }
           />
 
          <FlatList

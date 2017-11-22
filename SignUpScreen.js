@@ -93,7 +93,7 @@ then send to dash
         console.log(this.state.accessToken)
 
         Keyboard.dismiss()
-        this.props.navigation.navigate('Dash', {url: this.base_url, accessToken: this.state.accessToken})
+        this.props.navigation.navigate('BoardDash', {url: this.base_url, accessToken: this.state.accessToken, admin: this.state.email})
 
     }
 }

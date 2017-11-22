@@ -70,9 +70,7 @@ then send to dash
                   method: 'GET'
                 }).then((response) => {this.setState({accessToken: response._bodyText});})
 
-        console.log("print something by now")
-
-        this.props.navigation.navigate('Dash', {url: this.base_url, accessToken: this.state.accessToken})
+        this.props.navigation.navigate('BoardDash', {url: this.base_url, accessToken: this.state.accessToken, admin: this.state.email})
 
     }
 }

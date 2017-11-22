@@ -25,6 +25,15 @@ state = {
     description: '',
 }
 
+/**
+TODO: Add addTask API call here
+**/
+_addtask(){
+
+
+}
+
+
 handleButton(){
 /**
 Check for entered fields (name, category, dueDate, completionTime are required)
@@ -70,6 +79,7 @@ Post call / send back to dash
     }else{
         Keyboard.dismiss()
         this.props.navigation.navigate('Dash')
+        this._addtask()
     }
 }
 
